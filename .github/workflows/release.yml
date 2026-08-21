@@ -26,7 +26,6 @@ jobs:
           mkdir release-package
           copy bin\x64\Release\simc.exe release-package\
           Copy-Item -Recurse apl release-package\apl
-          Copy-Item -Recurse profiles release-package\profiles
           Compress-Archive -Path release-package\* -DestinationPath simc-windows.zip
 
       - name: Publish to GitHub Release
