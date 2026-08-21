@@ -447,32 +447,6 @@ public:
 
   double resource_gain( resource_e r, double amount, gain_t* source = nullptr, action_t* a = nullptr ) override;
 
-  std::string default_flask() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_potion ==================================================
-
-  std::string default_potion() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_food ====================================================
-
-  std::string default_food() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_rune ====================================================
-
-  std::string default_rune() const override
-  {
-    return "disabled";
-  }
-
   double current_worbs( bool /* react */ = false ) const
   {
     return resources.current[ RESOURCE_WINTER_ORB ];
@@ -481,13 +455,6 @@ public:
   resource_e primary_resource() const override
   {
     return RESOURCE_SPIRIT;
-  }
-
-  // rogue_t::default_temporary_enchant =======================================
-
-  std::string default_temporary_enchant() const override
-  {
-    return "disabled";
   }
 
   rime_t( sim_t* sim, util::string_view name, race_e r = RACE_NONE ) : fs_player_t( sim, name, r, RIME ), target_data()

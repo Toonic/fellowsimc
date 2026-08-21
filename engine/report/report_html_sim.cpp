@@ -959,9 +959,9 @@ void print_html_style( report::sc_html_stream& os, const sim_t& )
 {
   // Logo
   os << "<style type=\"text/css\" media=\"all\">\n"
-     << "#logo {background-image: url(data:image/png;base64,";
+     << "#logo {background-image: url(data:image/webp;base64,";
   print_text_array( os, __logo );
-  os << "); background-repeat: no-repeat; position: absolute;width: 350px; height: 158px; background-size: cover; }\n"
+  os << "); background-repeat: no-repeat; position: absolute; top: 16px; left: 16px; width: 330px; height: 115px; background-size: contain; background-position: center; border: none; }\n"
      << "</style>\n";
 
   // Rest
@@ -979,32 +979,19 @@ void print_html_masthead( report::sc_html_stream& os, const sim_t& sim )
 
   os.printf(
       "<span id=\"logo\"></span>\n"
-      "<h1><a href=\"%s\">SimulationCraft %s</a></h1>\n",
-      "https://www.simulationcraft.org/", SC_VERSION);
-
-  const char* type =       ( sim.dbc->ptr ?
-#if SC_BETA
-                    "BETA"
-#else
-                    "PTR"
-#endif
-                    : "Live" );
+      "<h1>FellowSimc %s</h1>\n",
+      SC_VERSION);
 
   if ( !git_info::available())
   {
-  os.printf(
-      "<h2>for World of Warcraft %s %s (wow build level %d)</h2>\n\n",
-      dbc::client_data_version_str( sim.dbc->ptr ), type,
-      dbc::client_data_build( sim.dbc->ptr ) );
+    os.printf(
+      "<h2>for Fellowship</h2>\n\n" );
   }
   else
   {
-    std::string commit_link = "https://github.com/simulationcraft/simc/commit/";
-    commit_link += git_info::revision();
-    os.printf("<h2>for World of Warcraft %s %s (hotfix %s/%d, git build <a href=\"%s\">%s</a>)</h2>\n\n",
-        dbc::client_data_version_str( sim.dbc->ptr ), type,
-        dbc::hotfix_date_str( sim.dbc->ptr ), dbc::hotfix_build_version( sim.dbc->ptr ),
-        commit_link.c_str(), git_info::revision());
+    os.printf(
+      "<h2>for Fellowship (git build %s)</h2>\n\n",
+      git_info::revision() );
   }
 
   os << "<ul class=\"params\">\n";

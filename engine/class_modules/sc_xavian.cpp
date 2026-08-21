@@ -437,39 +437,6 @@ public:
 
   void cancel_auto_attacks() override;
 
-  std::string default_flask() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_potion ==================================================
-
-  std::string default_potion() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_food ====================================================
-
-  std::string default_food() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_rune ====================================================
-
-  std::string default_rune() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_temporary_enchant =======================================
-
-  std::string default_temporary_enchant() const override
-  {
-    return "disabled";
-  }
-
   xavian_t( sim_t* sim, util::string_view name, race_e r = RACE_NONE )
     : fs_player_t( sim, name, r, XAVIAN ), target_data()
   {

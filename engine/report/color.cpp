@@ -35,56 +35,40 @@ rgb class_color( player_e type )
   switch ( type )
   {
     case PLAYER_NONE:
-      return color::GREY;
     case PLAYER_GUARDIAN:
+    case PLAYER_PET:
       return color::GREY;
-    case DEATH_KNIGHT:
-      return color::COLOR_DEATH_KNIGHT;
-    case DEMON_HUNTER:
-      return color::COLOR_DEMON_HUNTER;
-    case DRUID:
-      return color::COLOR_DRUID;
-    case EVOKER:
-      return color::COLOR_EVOKER;
-    case HUNTER:
-      return color::COLOR_HUNTER;
-    case MAGE:
-      return color::COLOR_MAGE;
-    case RIME:
-      return color::COLOR_RIME;
-    case MONK:
-      return color::COLOR_MONK;
-    case PALADIN:
-      return color::COLOR_PALADIN;
-    case ELARION:
-      return color::COLOR_ELARION;
-    case ARDEOS:
-      return color::COLOR_ARDEOS;
-    case GUNDE:
-      return color::COLOR_GUNDE;
-    case PRIEST:
-      return color::COLOR_PRIEST;
-    case ROGUE:
-      return color::COLOR_ROGUE;
-    case SHAMAN:
-      return color::COLOR_SHAMAN;
-    case WARLOCK:
-      return color::COLOR_WARLOCK;
-    case WARRIOR:
-      return color::COLOR_WARRIOR;
     case MARA:
       return color::COLOR_MARA;
+    case RIME:
+      return color::COLOR_RIME;
+    case ARDEOS:
+      return color::COLOR_ARDEOS;
+    case ELARION:
+      return color::COLOR_ELARION;
+    case GUNDE:
+      return color::COLOR_GUNDE;
+    case TARIQ:
+      return color::COLOR_TARIQ;
+    case AEONA:
+      return color::COLOR_AEONA;
+    case XAVIAN:
+      return color::COLOR_XAVIAN;
+    case MEIKO:
+      return color::COLOR_MEIKO;
+    case HELENA:
+      return color::COLOR_HELENA;
+    case SYLVIE:
+      return color::COLOR_SYLVIE;
+    case VIGOUR:
+      return color::COLOR_VIGOUR;
     case PLAYER_SIMPLIFIED:
       return color::COLOR_PLAYER_SIMPLIFIED;
     case ENEMY:
-      return color::GREY;
     case ENEMY_ADD:
     case ENEMY_ADD_PRIO:
-      return color::GREY;
     case ENEMY_ADD_BOSS:
-      return color::GREY;
     case HEALING_ENEMY:
-      return color::GREY;
     case TANK_DUMMY:
       return color::GREY;
     default:
@@ -97,40 +81,40 @@ rgb resource_color( resource_e type )
   switch ( type )
   {
     case RESOURCE_HEALTH:
-      return class_color( HUNTER );
+      return color::GREEN;
 
     case RESOURCE_MANA:
-      return class_color( SHAMAN );
+      return color::BLUE;
 
     case RESOURCE_ENERGY:
     case RESOURCE_FOCUS:
     case RESOURCE_COMBO_POINT:
-      return class_color( ROGUE );
+      return color::YELLOW;
 
     case RESOURCE_RAGE:
     case RESOURCE_RUNIC_POWER:
-      return class_color( DEATH_KNIGHT );
+      return color::RED;
 
     case RESOURCE_HOLY_POWER:
-      return class_color( PALADIN );
+      return color::HOLY;
 
     case RESOURCE_SOUL_SHARD:
-      return class_color( WARLOCK );
+      return color::PURPLE;
 
     case RESOURCE_ASTRAL_POWER:
-      return class_color( DRUID );
+      return color::rgb( "FF7D0A" );
 
     case RESOURCE_CHI:
-      return class_color( MONK );
+      return color::rgb( "00FF96" );
 
     case RESOURCE_MAELSTROM:
       return { "FF9900" };
 
     case RESOURCE_RUNE:
-      return class_color( MAGE );
+      return color::ARCANE;
 
     case RESOURCE_ESSENCE:
-      return class_color( EVOKER );
+      return color::rgb( "33937F" );
 
     case RESOURCE_NONE:
     default:
@@ -143,35 +127,35 @@ rgb stat_color( stat_e type )
   switch ( type )
   {
     case STAT_STRENGTH:
-      return COLOR_WARRIOR;
+      return color::PHYSICAL;
     case STAT_AGILITY:
-      return COLOR_HUNTER;
+      return color::NATURE;
     case STAT_INTELLECT:
-      return COLOR_MAGE;
+      return color::ARCANE;
     case STAT_SPIRIT:
-      return GREY3;
+      return color::GREY3;
     case STAT_ATTACK_POWER:
-      return COLOR_ROGUE;
+      return color::YELLOW;
     case STAT_SPELL_POWER:
-      return COLOR_WARLOCK;
+      return color::PURPLE;
     case STAT_CRIT_RATING:
-      return COLOR_PALADIN;
+      return color::rgb( "F58CBA" );
     case STAT_HASTE_RATING:
-      return COLOR_SHAMAN;
+      return color::BLUE;
     case STAT_MASTERY_RATING:
-      return COLOR_ROGUE.dark();
+      return color::YELLOW.dark();
     case STAT_DODGE_RATING:
-      return COLOR_MONK;
+      return color::rgb( "00FF96" );
     case STAT_PARRY_RATING:
-      return TEAL;
+      return color::TEAL;
     case STAT_ARMOR:
-      return COLOR_PRIEST;
+      return color::WHITE;
     case STAT_BONUS_ARMOR:
-      return COLOR_PRIEST;
+      return color::WHITE;
     case STAT_VERSATILITY_RATING:
-      return PURPLE.dark();
+      return color::PURPLE.dark();
     default:
-      return GREY2;
+      return color::GREY2;
   }
 }
 

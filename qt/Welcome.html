@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 
   <head>
 
-    <title>Welcome to SimulationCraft</title>
+    <title>Welcome to FellowSimc</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta name="color-scheme" content="light dark">
@@ -112,12 +112,11 @@
         <a href="#" class="close">close</a>
       </div>
     </div>
-    <img src="Welcome.png" alt="SimulationCraft logo" height="347" width="800">
+    <img src="Welcome.png" alt="FellowSimc logo" height="347" width="800">
 
     <div id="masthead" class="section section-open">
 
-      <p>SimulationCraft is a tool to explore combat mechanics in the popular MMO RPG World of Warcraft. It is a multi-player event-driven simulator written in C++ that models raid damage. Increasing class synergy and the prevalence of proc-based combat modifiers have eroded the accuracy of traditional calculators that rely upon closed-form approximations to model very complex mechanics. The goal of this simulator is to close the accuracy gap while maintaining a performance level high enough to calculate relative stat weights to aid gear selection.</p>
-      <p>One of the common criticisms of theorycrafting tools is that they model <i>Patchwerk</i> style fights in which the DPS players are able to focus exclusively on generating damage without worrying about standing in molten lava or other such trivial distractions. While truly modeling individual boss fights is a near-impossible task, SimulationCraft does support a wide array of raid events. See "Modeling Raid Events" and the Examples tab for details.</p>
+      <p>FellowSimc is a tool to explore combat mechanics in Fellowship. It is a multi-player event-driven simulator written in C++ that models character damage, talents, item builds, and team combat scenarios. The goal of this simulator is to evaluate character builds and priority rotations while maintaining high performance.</p>
 
       <h2 class="toggle">Table of Contents</h2>
       <div class="toggle-content">
@@ -182,8 +181,8 @@
           <li>The <i>Back</i> and <i>Forward</i> buttons to the left of the command-line allow you to cycle through the history of the main viewport. When viewing a web page under <i>Import</i> or <i>Results</i> they will cycle through the <i>URL</i> history. <b>When viewing <i>Globals</i>, <i>Simulate</i>, or <i>Overrides</i>, these buttons will cycle through previous states.</b> This history is persistent between runs.</li>
           <li>With the exception of the <i>Import</i> tab, pressing the <i>Enter</i> key while the command-line has focus is equivalent to clicking the main button.</li>
           <li><b>When the command-line has focus, the <i>Up</i> and <i>Down</i> keys cycle through the history of command-line text.</b> This history is persistent between runs.</li>
-          <li>The configuration script passed to the simulator is constructed by first adding the options implied by the button-settings under <i>Options</i>, followed by the text under <i>Simulate</i>, followed by the text under <i>Overrides</i> and finally including anything on the command line. It is important to understand that the last setting <i>wins</i>. <b>Users already comfortable with earlier releases of the command-line-only application can use the the GUI command-line in the same manner.</b> For example, one could type <i>armory=us,llane,segv</i> to download and simulate the Hunter Segv from server US-Llane.</li>
-          <li>Any option that does not fit the <i>parm=value</i> paradigm is assumed to be the name of a script file which is subsequently loaded. For example, typing <b>Raid_T17M.simc</b> on the command-line will load and simulate the shipped script that contains all supported class/spec combinations using T17M gear.  While the history mechanism of the <i>Back</i> and <i>Forward</i> buttons should be sufficient for most needs, it can be convenient to save complicated parameter settings in an external file.
+          <li>The configuration script passed to the simulator is constructed by first adding the options implied by the button-settings under <i>Options</i>, followed by the text under <i>Simulate</i>, followed by the text under <i>Overrides</i> and finally including anything on the command line. It is important to understand that the last setting <i>wins</i>.</li>
+          <li>Any option that does not fit the <i>parm=value</i> paradigm is assumed to be the name of a script file which is subsequently loaded. For example, typing <b>apl/rime/rime_apl.simc</b> on the command-line will load the character script.</li>
         </ul>
       </div>
       
@@ -193,7 +192,7 @@
     
       <h2 class="toggle">Global Parameters</h2>
       <div class="toggle-content">
-        <p>SimulationCraft has many, many options that can be loosely categorized into two groups, those that are applied to the <i>active</i> player and those that are applied globally. The <i>Globals</i> section of the <i>Options</i> tab is dedicated to the more commonly changed global parameters.</p>
+        <p>FellowSimc has many options that can be loosely categorized into two groups: those that are applied to the <i>active</i> player and those that are applied globally. The <i>Globals</i> section of the <i>Options</i> tab is dedicated to commonly changed global parameters.</p>
         <ul class="mt spaced">
 
           <li><b>Version:</b> The mechanics of <i>World of Warcraft</i> are constantly changing. SimulationCraft endeavors to model the two most recent patch levels. This corresponds to <i>Live</i> and <i>PTR</i>. The <i>Both</i> option will simulate two characters at once: One character will run with Live mechanics and a second character with the name <i>EvilTwinPTR</i> will be run with PTR mechanics. The results will shown side-by-side for easy comparison.</li>

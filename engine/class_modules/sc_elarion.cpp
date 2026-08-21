@@ -660,32 +660,6 @@ public:
   // ardeos_t::extend_starfall_volleys ========================================
   void extend_starfall_volleys( timespan_t extension );
 
-  std::string default_flask() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_potion ==================================================
-
-  std::string default_potion() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_food ====================================================
-
-  std::string default_food() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_rune ====================================================
-
-  std::string default_rune() const override
-  {
-    return "disabled";
-  }
-
   double current_focus( bool /* react */ = false ) const
   {
     return resources.current[ RESOURCE_FOCUS ];
@@ -694,13 +668,6 @@ public:
   resource_e primary_resource() const override
   {
     return RESOURCE_SPIRIT;
-  }
-
-  // rogue_t::default_temporary_enchant =======================================
-
-  std::string default_temporary_enchant() const override
-  {
-    return "disabled";
   }
 
   std::set<player_t*> starfall_volley_players;

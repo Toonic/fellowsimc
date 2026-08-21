@@ -18,15 +18,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\engine\class_modules\fs_player.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\engine\class_modules\fs_player.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_ardeos.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_mara.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_rime.cpp" />
-  </ItemGroup>
+
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{3347E740-6831-4441-A559-481FD127156F}</ProjectGuid>

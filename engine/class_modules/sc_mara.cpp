@@ -442,39 +442,6 @@ public:
   void break_stealth();
   void cancel_auto_attacks() override;
 
-  std::string default_flask() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_potion ==================================================
-
-  std::string default_potion() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_food ====================================================
-
-  std::string default_food() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_rune ====================================================
-
-  std::string default_rune() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_temporary_enchant =======================================
-
-  std::string default_temporary_enchant() const override
-  {
-    return "disabled";
-  }
-
   double consume_cp_max() const
   {
     return COMBO_POINT_MAX;

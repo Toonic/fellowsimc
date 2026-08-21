@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug-NoNetworking|x64">
@@ -18,20 +18,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\engine\class_modules\fs_player.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\engine\class_modules\fs_player.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_ardeos.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_elarion.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_aeona.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_gunde.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_mara.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_rime.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_tariq.cpp" />
-    <ClCompile Include="..\engine\class_modules\sc_xavian.cpp" />
-  </ItemGroup>
+
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{3347E740-6831-4441-A559-481FD127156F}</ProjectGuid>

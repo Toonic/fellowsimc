@@ -1490,10 +1490,10 @@ sim_t::sim_t()
     buff_stack_uptime_timeline( 1 ),
     json_full_states( 0 ),
     decorated_tooltips( -1 ),
-    allow_potions( true ),
-    allow_food( true ),
-    allow_flasks( true ),
-    allow_augmentations( true ),
+    allow_potions( false ),
+    allow_food( false ),
+    allow_flasks( false ),
+    allow_augmentations( false ),
     solo_raid( false ),
     maximize_reporting( false ),
     apikey( get_api_key() ),
@@ -3595,7 +3595,7 @@ std::unique_ptr<expr_t> sim_t::create_expression( util::string_view name_str )
 void sim_t::print_options()
 {
   auto& raw_log = out_log.raw();
-  raw_log.print( "\nWorld of Warcraft Raid Simulator Options:\n" );
+  raw_log.print( "\nFellowSimc Simulator Options:\n" );
 
   raw_log.print( "\nSimulation Engine:\n" );
   for ( const auto& option : options )

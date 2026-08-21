@@ -147,51 +147,43 @@ namespace color
   rgb stat_color(stat_e type);
   rgb school_color(school_e school);
 
-  // Class colors
-  inline constexpr rgb COLOR_DEATH_KNIGHT( "C41F3B" );
-  inline constexpr rgb COLOR_DEMON_HUNTER( "A330C9" );
-  inline constexpr rgb COLOR_DRUID( "FF7D0A" );
-  inline constexpr rgb COLOR_EVOKER( "33937F" );
-  inline constexpr rgb COLOR_HUNTER( "ABD473" );
-  inline constexpr rgb COLOR_MAGE( "69CCF0" );
-  inline constexpr rgb COLOR_MONK( "00FF96" );
-  inline constexpr rgb COLOR_PALADIN( "F58CBA" );
-  inline constexpr rgb COLOR_PRIEST( "FFFFFF" );
-  inline constexpr rgb COLOR_ROGUE( "FFF569" );
-  inline constexpr rgb COLOR_SHAMAN( "0070DE" );
-  inline constexpr rgb COLOR_WARLOCK( "9482C9" );
-  inline constexpr rgb COLOR_WARRIOR( "C79C6E" );
+  // Hero colors
   inline constexpr rgb COLOR_PLAYER_SIMPLIFIED( "FF69B4" );
-
   inline constexpr rgb COLOR_ELARION( "935DFF" );
   inline constexpr rgb COLOR_GUNDE( "872F30" );
   inline constexpr rgb COLOR_ARDEOS( "EB6328" );
   inline constexpr rgb COLOR_TARIQ( "163EB9" );
   inline constexpr rgb COLOR_MARA( "6F2EF1" );
   inline constexpr rgb COLOR_RIME( "1EA3EE" );
-  
-  
+  inline constexpr rgb COLOR_AEONA( "2ECC71" );
+  inline constexpr rgb COLOR_XAVIAN( "8E44AD" );
+  inline constexpr rgb COLOR_MEIKO( "E67E22" );
+  inline constexpr rgb COLOR_HELENA( "F1C40F" );
+  inline constexpr rgb COLOR_SYLVIE( "1ABC9C" );
+  inline constexpr rgb COLOR_VIGOUR( "E74C3C" );
 
   inline constexpr rgb WHITE( "FFFFFF" );
   inline constexpr rgb GREY( "333333" );
   inline constexpr rgb GREY2( "666666" );
   inline constexpr rgb GREY3( "8A8A8A" );
-  inline constexpr rgb YELLOW = COLOR_ROGUE;
+  inline constexpr rgb YELLOW( "FFF569" );
   inline constexpr rgb PURPLE( "9482C9" );
-  inline constexpr rgb RED = COLOR_DEATH_KNIGHT;
+  inline constexpr rgb RED( "C41F3B" );
+  inline constexpr rgb GREEN( "55C055" );
+  inline constexpr rgb BLUE( "0070DE" );
   inline constexpr rgb TEAL( "009090" );
   inline constexpr rgb BLACK( "000000" );
 
   // School colors
   inline constexpr rgb COLOR_NONE = WHITE;
-  inline constexpr rgb PHYSICAL = COLOR_WARRIOR;
+  inline constexpr rgb PHYSICAL( "C79C6E" );
   inline constexpr rgb HOLY( "FFCC00" );
-  inline constexpr rgb FIRE = COLOR_DEATH_KNIGHT;
-  inline constexpr rgb NATURE = COLOR_HUNTER;
-  inline constexpr rgb FROST = COLOR_SHAMAN;
+  inline constexpr rgb FIRE( "E25822" );
+  inline constexpr rgb NATURE( "4E9A06" );
+  inline constexpr rgb FROST( "3399FF" );
   inline constexpr rgb SHADOW = PURPLE;
-  inline constexpr rgb ARCANE = COLOR_MAGE;
-  inline constexpr rgb ELEMENTAL = COLOR_MONK;
+  inline constexpr rgb ARCANE( "69CCF0" );
+  inline constexpr rgb ELEMENTAL( "00FF96" );
   inline constexpr rgb FROSTFIRE( "9900CC" );
   inline constexpr rgb CHAOS( "00C800" );
 

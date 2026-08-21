@@ -477,32 +477,6 @@ static constexpr std::string_view talent_name_formatted( aeona_talents_t t )
   double resource_gain( resource_e r, double amount, gain_t* source = nullptr, action_t* a = nullptr ) override;
   double resource_loss( resource_e r, double amount, gain_t* source = nullptr, action_t* a = nullptr ) override;
 
-  std::string default_flask() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_potion ==================================================
-
-  std::string default_potion() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_food ====================================================
-
-  std::string default_food() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_rune ====================================================
-
-  std::string default_rune() const override
-  {
-    return "disabled";
-  }
-
   double current_temporal_overcharge( bool /* react */ = false ) const
   {
     return resources.current[ RESOURCE_CHRONA ];
@@ -511,13 +485,6 @@ static constexpr std::string_view talent_name_formatted( aeona_talents_t t )
   resource_e primary_resource() const override
   {
     return RESOURCE_SPIRIT;
-  }
-
-  // rogue_t::default_temporary_enchant =======================================
-
-  std::string default_temporary_enchant() const override
-  {
-    return "disabled";
   }
 
   aeona_t( sim_t* sim, util::string_view name, race_e r = RACE_NONE )

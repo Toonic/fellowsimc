@@ -1931,12 +1931,12 @@ constexpr std::string_view stat_type_string_view( stat_e stat )
       return "block_rating";
 
     case STAT_MASTERY_RATING:
-      return "mastery_rating";
+      return "spirit_rating";
 
     case STAT_PVP_POWER:
       return "pvp_power";
     case STAT_VERSATILITY_RATING:
-      return "versatility_rating";
+      return "expertise_rating";
 
     case STAT_LEECH_RATING:
       return "leech_rating";

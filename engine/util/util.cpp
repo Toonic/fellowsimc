@@ -29,51 +29,7 @@ struct spec_map_t
 
 const spec_map_t spec_map[] =
 {
-  { WARRIOR_ARMS,           "Arms Warrior"           },
-  { WARRIOR_FURY,           "Fury Warrior"           },
-  { WARRIOR_PROTECTION,     "Protection Warrior"     },
-  { PALADIN_HOLY,           "Holy Paladin"           },
-  { PALADIN_PROTECTION,     "Protection Paladin"     },
-  { PALADIN_RETRIBUTION,    "Retribution Paladin"    },
-  { HUNTER_BEAST_MASTERY,   "Beast Mastery Hunter"   },
-  { HUNTER_BEAST_MASTERY,   "Beast-Mastery Hunter"   }, // Alternate
-  { HUNTER_MARKSMANSHIP,    "Marksmanship Hunter"    },
-  { HUNTER_SURVIVAL,        "Survival Hunter"        },
-  { ROGUE_ASSASSINATION,    "Assassination Rogue"    },
-  { ROGUE_OUTLAW,           "Outlaw Rogue"           },
-  { ROGUE_SUBTLETY,         "Subtlety Rogue"         },
-  { PRIEST_DISCIPLINE,      "Discipline Priest"      },
-  { PRIEST_HOLY,            "Holy Priest"            },
-  { PRIEST_SHADOW,          "Shadow Priest"          },
-  { DEATH_KNIGHT_BLOOD,     "Blood Death Knight"     }, // Default
-  { DEATH_KNIGHT_BLOOD,     "Blood DeathKnight"      }, // Alternate (battle.net match)
-  { DEATH_KNIGHT_FROST,     "Frost Death Knight"     }, // Default
-  { DEATH_KNIGHT_FROST,     "Frost DeathKnight"      }, // Alternate (battle.net match)
-  { DEATH_KNIGHT_UNHOLY,    "Unholy Death Knight"    }, // Default
-  { DEATH_KNIGHT_UNHOLY,    "Unholy DeathKnight"     }, // Alternate (battle.net match)
-  { SHAMAN_ELEMENTAL,       "Elemental Shaman"       },
-  { SHAMAN_ENHANCEMENT,     "Enhancement Shaman"     },
-  { SHAMAN_RESTORATION,     "Restoration Shaman"     },
-  { MAGE_ARCANE,            "Arcane Mage"            },
-  { MAGE_FIRE,              "Fire Mage"              },
-  { MAGE_FROST,             "Frost Mage"             },
-  { WARLOCK_AFFLICTION,     "Affliction Warlock"     },
-  { WARLOCK_DEMONOLOGY,     "Demonology Warlock"     },
-  { WARLOCK_DESTRUCTION,    "Destruction Warlock"    },
-  { MONK_BREWMASTER,        "Brewmaster Monk"        },
-  { MONK_MISTWEAVER,        "Mistweaver Monk"        },
-  { MONK_WINDWALKER,        "Windwalker Monk"        },
-  { DRUID_BALANCE,          "Balance Druid"          },
-  { DRUID_FERAL,            "Feral Druid"            },
-  { DRUID_GUARDIAN,         "Guardian Druid"         },
-  { DRUID_RESTORATION,      "Restoration Druid"      },
-  { DEMON_HUNTER_HAVOC,     "Havoc Demon Hunter"     },
-  { DEMON_HUNTER_HAVOC,     "Havoc DemonHunter"      },
-  { DEMON_HUNTER_VENGEANCE, "Vengeance Demon Hunter" },
-  { DEMON_HUNTER_VENGEANCE, "Vengeance DemonHunter"  },
-  { EVOKER_DEVASTATION,     "Devastation Evoker"     },
-  { EVOKER_PRESERVATION,    "Preservation Evoker"    },
-  { EVOKER_AUGMENTATION,    "Augmentation Evoker"    },
+  { SPEC_NONE, "None" },
 };
 
 struct html_named_character_t
@@ -226,8 +182,7 @@ std::string util::version_info_str( const dbc_t* dbc )
     return {};
   }
 
-  return fmt::format( "SimulationCraft {} for World of Warcraft {} {}", SC_VERSION,
-                      dbc::client_data_version_str( dbc->ptr ), dbc->wow_ptr_status() );
+  return fmt::format( "FellowSimc {} for Fellowship", SC_VERSION );
 }
 
 std::string util::build_info_str( const dbc_t* dbc, int display_level )
@@ -621,19 +576,6 @@ const char* util::player_type_string( player_e type )
   switch ( type )
   {
     case PLAYER_NONE:             return "none";
-    case DEATH_KNIGHT:            return "deathknight";
-    case DEMON_HUNTER:            return "demonhunter";
-    case DRUID:                   return "druid";
-    case EVOKER:                  return "evoker";
-    case HUNTER:                  return "hunter";
-    case MAGE:                    return "mage";
-    case MONK:                    return "monk";
-    case PALADIN:                 return "paladin";
-    case PRIEST:                  return "priest";
-    case ROGUE:                   return "rogue";
-    case SHAMAN:                  return "shaman";
-    case WARLOCK:                 return "warlock";
-    case WARRIOR:                 return "warrior";
     case MARA:                    return "mara";
     case RIME:                    return "rime";
     case ARDEOS:                  return "ardeos";
@@ -675,19 +617,6 @@ const char* util::player_type_string_long( player_e type )
   switch ( type )
   {
     case PLAYER_NONE:     return "None";
-    case DEATH_KNIGHT:    return "Death Knight";
-    case DEMON_HUNTER:    return "Demon Hunter";
-    case DRUID:           return "Druid";
-    case EVOKER:          return "Evoker";
-    case HUNTER:          return "Hunter";
-    case MAGE:            return "Mage";
-    case MONK:            return "Monk";
-    case PALADIN:         return "Paladin";
-    case PRIEST:          return "Priest";
-    case ROGUE:           return "Rogue";
-    case SHAMAN:          return "Shaman";
-    case WARLOCK:         return "Warlock";
-    case WARRIOR:         return "Warrior";
     case MARA:            return "Mara";
     case RIME:            return "Rime";
     case ARDEOS:          return "Ardeos";
@@ -700,7 +629,7 @@ const char* util::player_type_string_long( player_e type )
     case VIGOUR:          return "Vigour";
     case AEONA:           return "Aeona";
     case XAVIAN:          return "Xavian";
-    case PLAYER_SIMPLIFIED:         return "Simplified Player";
+    case PLAYER_SIMPLIFIED: return "Simplified Player";
     case PLAYER_PET:      return "Pet";
     case PLAYER_GUARDIAN: return "Guardian";
     case ENEMY:           return "Enemy";
@@ -1387,31 +1316,18 @@ item_subclass_armor util::matching_armor_type( player_e ptype )
 {
   switch ( ptype )
   {
-    case WARRIOR:
-    case PALADIN:
-    case DEATH_KNIGHT:
-    case PLAYER_SIMPLIFIED:
     case HELENA:
     case XAVIAN:
+    case PLAYER_SIMPLIFIED:
       return ITEM_SUBCLASS_ARMOR_PLATE;
-    case HUNTER:
-    case SHAMAN:
-    case EVOKER:
     case GUNDE:
     case ELARION:
     case TARIQ:
     case VIGOUR:
       return ITEM_SUBCLASS_ARMOR_MAIL;
-    case DRUID:
-    case ROGUE:
-    case MONK:
-    case DEMON_HUNTER:
     case MARA:
     case SYLVIE:
       return ITEM_SUBCLASS_ARMOR_LEATHER;
-    case MAGE:
-    case PRIEST:
-    case WARLOCK:
     case RIME:
     case ARDEOS:
     case AEONA:
@@ -1704,10 +1620,10 @@ const char* util::stat_type_string( stat_e stat )
 
     case STAT_BLOCK_RATING: return "block_rating";
 
-    case STAT_MASTERY_RATING: return "mastery_rating";
+    case STAT_MASTERY_RATING: return "spirit_rating";
 
     case STAT_PVP_POWER: return "pvp_power";
-    case STAT_VERSATILITY_RATING: return "versatility_rating";
+    case STAT_VERSATILITY_RATING: return "expertise_rating";
 
     case STAT_LEECH_RATING: return "leech_rating";
     case STAT_SPEED_RATING: return "speed_rating";
@@ -1730,8 +1646,8 @@ const char* util::stat_pct_buff_type_string( stat_pct_buff_type stat )
   {
     case STAT_PCT_BUFF_CRIT: return "crit";
     case STAT_PCT_BUFF_HASTE: return "haste";
-    case STAT_PCT_BUFF_VERSATILITY: return "Expertis";
-    case STAT_PCT_BUFF_MASTERY: return "spiri";
+    case STAT_PCT_BUFF_VERSATILITY: return "expertise";
+    case STAT_PCT_BUFF_MASTERY: return "spirit";
     case STAT_PCT_BUFF_STRENGTH: return "strength";
     case STAT_PCT_BUFF_AGILITY: return "agility";
     case STAT_PCT_BUFF_STAMINA: return "stamina";
@@ -1795,11 +1711,11 @@ const char* util::stat_type_abbrev( stat_e stat )
 
     case STAT_BLOCK_RATING: return "BlockR";
 
-    case STAT_MASTERY_RATING: return "Spiri";
+    case STAT_MASTERY_RATING: return "Spirit";
 
     case STAT_PVP_POWER: return "PvPP";
 
-    case STAT_VERSATILITY_RATING: return "Expertis";
+    case STAT_VERSATILITY_RATING: return "Expertise";
 
     case STAT_LEECH_RATING: return "Leech";
     case STAT_SPEED_RATING: return "RunSpeed";
@@ -1881,9 +1797,10 @@ const char* util::stat_type_gem( stat_e stat )
 
     case STAT_HIT_RATING: return "Hit";
     case STAT_EXPERTISE_RATING: return "Expertise";
+    case STAT_VERSATILITY_RATING: return "Expertise";
     case STAT_CRIT_RATING: return "Critical Strike";
     case STAT_HASTE_RATING: return "Haste";
-    case STAT_MASTERY_RATING: return "Mastery";
+    case STAT_MASTERY_RATING: return "Spirit";
 
     case STAT_DODGE_RATING: return "Dodge";
     case STAT_PARRY_RATING: return "Parry";
@@ -1898,50 +1815,7 @@ const char* util::stat_type_gem( stat_e stat )
 
 const char* util::spec_string_no_class( const player_t& p )
 {
-  // Player spec
-  switch ( p.specialization() )
-  {
-    case DEATH_KNIGHT_BLOOD:     return "Blood";
-    case DEATH_KNIGHT_FROST:     return "Frost";
-    case DEATH_KNIGHT_UNHOLY:    return "Unholy";
-    case DEMON_HUNTER_HAVOC:     return "Havoc";
-    case DEMON_HUNTER_VENGEANCE: return "Vengeance";
-    case DRUID_BALANCE:          return "Balance";
-    case DRUID_FERAL:            return "Feral";
-    case DRUID_GUARDIAN:         return "Guardian";
-    case DRUID_RESTORATION:      return "Restoration";
-    case EVOKER_DEVASTATION:     return "Devastation";
-    case EVOKER_PRESERVATION:    return "Preservation";
-    case EVOKER_AUGMENTATION:    return "Augmentation";
-    case HUNTER_BEAST_MASTERY:   return "BeastMastery";
-    case HUNTER_MARKSMANSHIP:    return "Marksmanship";
-    case HUNTER_SURVIVAL:        return "Survival";
-    case MAGE_ARCANE:            return "Arcane";
-    case MAGE_FIRE:              return "Fire";
-    case MAGE_FROST:             return "Frost";
-    case MONK_BREWMASTER:        return "Brewmaster";
-    case MONK_MISTWEAVER:        return "Mistweaver";
-    case MONK_WINDWALKER:        return "Windwalker";
-    case PALADIN_HOLY:           return "Holy";
-    case PALADIN_PROTECTION:     return "Protection";
-    case PALADIN_RETRIBUTION:    return "Retribution";
-    case PRIEST_DISCIPLINE:      return "Discipline";
-    case PRIEST_HOLY:            return "Holy";
-    case PRIEST_SHADOW:          return "Shadow";
-    case ROGUE_ASSASSINATION:    return "Assassination";
-    case ROGUE_OUTLAW:           return "Outlaw";
-    case ROGUE_SUBTLETY:         return "Subtlety";
-    case SHAMAN_ELEMENTAL:       return "Elemental";
-    case SHAMAN_ENHANCEMENT:     return "Enhancement";
-    case SHAMAN_RESTORATION:     return "Restoration";
-    case WARLOCK_AFFLICTION:     return "Affliction";
-    case WARLOCK_DEMONOLOGY:     return "Demonology";
-    case WARLOCK_DESTRUCTION:    return "Destruction";
-    case WARRIOR_ARMS:           return "Arms";
-    case WARRIOR_FURY:           return "Fury";
-    case WARRIOR_PROTECTION:     return "Protection";
-    default:                     return "";
-  }
+  return "";
 }
 
 // parse_stat_type ==========================================================
@@ -1956,6 +1830,9 @@ stat_e util::parse_stat_type( util::string_view name )
 
   s = parse_enum<stat_e, STAT_NONE, STAT_MAX, stat_type_wowhead>( name );
   if ( s != STAT_NONE ) return s;
+
+  if ( str_compare_ci( name, "mastery" ) || str_compare_ci( name, "mastery_rating" ) || str_compare_ci( name, "spirit_rating" ) ) return STAT_MASTERY_RATING;
+  if ( str_compare_ci( name, "versatility" ) || str_compare_ci( name, "versatility_rating" ) || str_compare_ci( name, "vers" ) || str_compare_ci( name, "expertise_rating" ) ) return STAT_VERSATILITY_RATING;
 
   if ( name == "rgdcritstrkrtng" ) return STAT_CRIT_RATING;
 
@@ -2115,19 +1992,18 @@ int util::class_id( player_e type )
 {
   switch ( type )
   {
-    case WARRIOR:      return  1;
-    case PALADIN:      return  2;
-    case HUNTER:       return  3;
-    case ROGUE:        return  4;
-    case PRIEST:       return  5;
-    case DEATH_KNIGHT: return  6;
-    case SHAMAN:       return  7;
-    case MAGE:         return  8;
-    case WARLOCK:      return  9;
-    case MONK:         return 10;
-    case DRUID:        return 11;
-    case DEMON_HUNTER: return 12;
-    case EVOKER:       return 13;
+    case MARA:         return  1;
+    case RIME:         return  2;
+    case ARDEOS:       return  3;
+    case ELARION:      return  4;
+    case GUNDE:        return  5;
+    case TARIQ:        return  6;
+    case MEIKO:        return  7;
+    case HELENA:       return  8;
+    case SYLVIE:       return  9;
+    case VIGOUR:       return 10;
+    case AEONA:        return 11;
+    case XAVIAN:       return 12;
     case PLAYER_SPECIAL_SCALE: return 14;
     case PLAYER_SPECIAL_SCALE2: return 15;
     case PLAYER_SPECIAL_SCALE3: return 16;
@@ -2197,26 +2073,7 @@ unsigned util::race_mask( race_e race )
 
 player_e util::pet_class_type( pet_e type )
 {
-  player_e p = WARRIOR;
-
-  if ( type <= PET_HUNTER )
-  {
-    p = WARRIOR;
-  }
-  else if ( type == PET_GHOUL )
-  {
-    p = ROGUE;
-  }
-  else if ( type == PET_FELGUARD )
-  {
-    p = WARRIOR;
-  }
-  else if ( type <= PET_WARLOCK )
-  {
-    p = WARLOCK;
-  }
-
-  return p;
+  return PLAYER_PET;
 }
 
 // pet_mask =================================================================
@@ -2255,19 +2112,18 @@ player_e util::translate_class_id( int cid )
 {
   switch ( cid )
   {
-    case  1: return WARRIOR;
-    case  2: return PALADIN;
-    case  3: return HUNTER;
-    case  4: return ROGUE;
-    case  5: return PRIEST;
-    case  6: return DEATH_KNIGHT;
-    case  7: return SHAMAN;
-    case  8: return MAGE;
-    case  9: return WARLOCK;
-    case 10: return MONK;
-    case 11: return DRUID;
-    case 12: return DEMON_HUNTER;
-    case 13: return EVOKER;
+    case  1: return MARA;
+    case  2: return RIME;
+    case  3: return ARDEOS;
+    case  4: return ELARION;
+    case  5: return GUNDE;
+    case  6: return TARIQ;
+    case  7: return MEIKO;
+    case  8: return HELENA;
+    case  9: return SYLVIE;
+    case 10: return VIGOUR;
+    case 11: return AEONA;
+    case 12: return XAVIAN;
     default: return PLAYER_NONE;
   }
 }

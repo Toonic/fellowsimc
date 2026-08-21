@@ -443,32 +443,6 @@ public:
   void extend_dot( dot_t* d, timespan_t duration );
   void extend_dots( player_t* target, timespan_t duration );
 
-  std::string default_flask() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_potion ==================================================
-
-  std::string default_potion() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_food ====================================================
-
-  std::string default_food() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_rune ====================================================
-
-  std::string default_rune() const override
-  {
-    return "disabled";
-  }
-
   double current_cinders( bool /* react */ = false ) const
   {
     return resources.current[ RESOURCE_CINDERS ];
@@ -477,13 +451,6 @@ public:
   resource_e primary_resource() const override
   {
     return RESOURCE_SPIRIT;
-  }
-
-  // rogue_t::default_temporary_enchant =======================================
-
-  std::string default_temporary_enchant() const override
-  {
-    return "disabled";
   }
 
   ardeos_t( sim_t* sim, util::string_view name, race_e r = RACE_NONE )

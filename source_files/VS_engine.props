@@ -22,6 +22,7 @@ To change the list of source files run synchronize.py
 		<ClInclude Include="..\engine\action\variable.hpp" />
 		<ClInclude Include="..\engine\buff\buff.hpp" />
 		<ClInclude Include="..\engine\class_modules\class_module.hpp" />
+		<ClInclude Include="..\engine\class_modules\fs_player.hpp" />
 		<ClInclude Include="..\engine\config.hpp" />
 		<ClInclude Include="..\engine\dbc\active_spells.hpp" />
 		<ClInclude Include="..\engine\dbc\assisted_combat.hpp" />
@@ -196,7 +197,16 @@ To change the list of source files run synchronize.py
 		<ClCompile Include="..\engine\action\stats.cpp" />
 		<ClCompile Include="..\engine\action\variable.cpp" />
 		<ClCompile Include="..\engine\buff\buff.cpp" />
+		<ClCompile Include="..\engine\class_modules\fs_player.cpp" />
+		<ClCompile Include="..\engine\class_modules\sc_aeona.cpp" />
+		<ClCompile Include="..\engine\class_modules\sc_ardeos.cpp" />
+		<ClCompile Include="..\engine\class_modules\sc_elarion.cpp" />
 		<ClCompile Include="..\engine\class_modules\sc_enemy.cpp" />
+		<ClCompile Include="..\engine\class_modules\sc_gunde.cpp" />
+		<ClCompile Include="..\engine\class_modules\sc_mara.cpp" />
+		<ClCompile Include="..\engine\class_modules\sc_rime.cpp" />
+		<ClCompile Include="..\engine\class_modules\sc_tariq.cpp" />
+		<ClCompile Include="..\engine\class_modules\sc_xavian.cpp" />
 		<ClCompile Include="..\engine\dbc\active_spells.cpp" />
 		<ClCompile Include="..\engine\dbc\assisted_combat.cpp" />
 		<ClCompile Include="..\engine\dbc\character_loadout.cpp" />

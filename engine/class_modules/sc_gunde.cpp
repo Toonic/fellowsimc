@@ -656,39 +656,6 @@ public:
 
   void spawn_feathers( int quantity = 1 );
 
-  std::string default_flask() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_potion ==================================================
-
-  std::string default_potion() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_food ====================================================
-
-  std::string default_food() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_rune ====================================================
-
-  std::string default_rune() const override
-  {
-    return "disabled";
-  }
-
-  // rogue_t::default_temporary_enchant =======================================
-
-  std::string default_temporary_enchant() const override
-  {
-    return "disabled";
-  }
-
   gunde_t( sim_t* sim, util::string_view name, race_e r = RACE_NONE )
     : fs_player_t( sim, name, r, GUNDE ), target_data()
   {

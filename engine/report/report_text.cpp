@@ -329,8 +329,8 @@ void print_generic_stats( std::ostream& os, const player_t& p )
   fmt::print(
       os,
       "  Generic Stats: "
-      "mastery={:.2f}%|{:.2f}%({:.0f})  "
-      "versatility={:.2f}%|{:.2f}%({:.0f})  "
+      "spirit={:.2f}%|{:.2f}%({:.0f})  "
+      "expertise={:.2f}%|{:.2f}%({:.0f})  "
       "leech={:.2f}%|{:.2f}%({:.0f})  "
       "runspeed={:.2f}%|{:.2f}%({:.0f})\n",
       100.0 * buffed_stats.mastery_value, 100.0 * p.cache.mastery_value(),
@@ -436,7 +436,7 @@ void print_defense_stats( std::ostream& os, const player_t& p )
       "  Defense Stats: armor={:.0f}|{:.0f}({:.0f}) miss={:.2f}%|{:.2f}%  "
       "dodge={:.2f}%|{:.2f}%({:.0f})  parry={:.2f}%|{:.2f}%({:.0f})  "
       "block={:.2f}%|{:.2f}%({:.0f}) crit={:.2f}%|{:.2f}%  "
-      "versatility={:.2f}%|{:.2f}%({:.0f})\n",
+      "expertise={:.2f}%|{:.2f}%({:.0f})\n",
       buffed_stats.armor,
       p.composite_armor(),
       p.initial.stats.armor,

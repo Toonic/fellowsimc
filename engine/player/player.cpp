@@ -12282,12 +12282,11 @@ void player_t::create_options()
   add_option( opt_float( "enchant_spirit", enchant.attribute[ ATTR_SPIRIT ] ) );
   add_option( opt_float( "enchant_spell_power", enchant.spell_power ) );
   add_option( opt_float( "enchant_attack_power", enchant.attack_power ) );
-  add_option( opt_float( "enchant_expertise_rating", enchant.expertise_rating ) );
-  add_option( opt_float( "enchant_armor", enchant.armor ) );
+  add_option( opt_float( "enchant_expertise_rating", enchant.versatility_rating ) );
   add_option( opt_float( "enchant_haste_rating", enchant.haste_rating ) );
   add_option( opt_float( "enchant_hit_rating", enchant.hit_rating ) );
   add_option( opt_float( "enchant_crit_rating", enchant.crit_rating ) );
-  add_option( opt_float( "enchant_mastery_rating", enchant.mastery_rating ) );
+  add_option( opt_float( "enchant_spirit_rating", enchant.mastery_rating ) );
   add_option( opt_float( "enchant_versatility_rating", enchant.versatility_rating ) );
   add_option( opt_float( "enchant_bonus_armor", enchant.bonus_armor ) );
   add_option( opt_float( "enchant_leech_rating", enchant.leech_rating ) );
