@@ -1,4 +1,4 @@
-name: Build Windows exe
+name: Build (test)
 
 on:
   workflow_dispatch:
@@ -15,9 +15,17 @@ jobs:
       - name: Build
         run: msbuild simc_vs2026.sln /p:Configuration=Release /p:Platform=x64
 
-      - name: Upload result
+      - name: Package build
+        shell: pwsh
+        run: |
+          mkdir release-package
+          copy bin\x64\Release\simc.exe release-package\
+          Copy-Item -Recurse apl release-package\apl
+          Copy-Item -Recurse profiles release-package\profiles
+          Compress-Archive -Path release-package\* -DestinationPath simc-windows.zip
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: simc-windows-build
-          path: |
-            **/*.exe
+          path: simc-windows.zip
