@@ -30,6 +30,8 @@ jobs:
           Get-ChildItem -Path apl -Exclude "development" | Copy-Item -Destination release-package\apl -Recurse -Force
           if (Test-Path profiles) { Copy-Item -Recurse profiles release-package\profiles }
           Copy-Item -Recurse ui release-package\ui
+          Remove-Item -Recurse -Force release-package\ui\__pycache__ -ErrorAction SilentlyContinue
+          Remove-Item -Force release-package\ui\*config.json -ErrorAction SilentlyContinue
           Compress-Archive -Path release-package\* -DestinationPath simc-windows.zip
 
       - name: Publish to GitHub Release
