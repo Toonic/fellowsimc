@@ -1422,7 +1422,7 @@ void fs_player_t::create_buffs()
 
   fs_buffs.patient_soul =
       make_buff<stat_buff_t>( this, "patient_soul" )
-          ->add_stat( STAT_VERSATILITY_RATING,
+          ->add_stat( STAT_EXPERTISE_RATING,
                       fs_weapon_trait_values.patient_soul_expertise[ fs_weapons.patient_soul ] )
           ->set_default_value( fs_weapon_trait_values.patient_soul_max_hp[ fs_weapons.patient_soul ] )
           ->set_constant_behavior( buff_constant_behavior::NEVER_CONSTANT )
@@ -1554,8 +1554,7 @@ void fs_player_t::create_buffs()
 
   struct chronoshift_buff_t : fs_player_buff_t
   {
-    // This is 8.0 mod but its actually 700% additive. (?) - Angry
-    double cdr_mod = 7.0;
+    double cdr_mod = 8.0; // 800% increased cooldown recovery
 
     chronoshift_buff_t( player_t* pl ) : fs_player_buff_t( pl, "chronoshift_barrier" )
     {
@@ -1834,23 +1833,23 @@ void fs_player_t::init_special_effects()
 
   if ( fs_gems.gem_powers[ GEM_EMERALD ] >= GEM_TIER_7 )
   {
-    passive.add_stat( STAT_VERSATILITY_RATING, fs_gems.stat_major );
+    passive.add_stat( STAT_EXPERTISE_RATING, fs_gems.stat_major );
     passive.add_stat( STAT_STAMINA, fs_gems.stat_major );
   }
   else if ( fs_gems.gem_powers[ GEM_EMERALD ] >= GEM_TIER_2 )
   {
-    passive.add_stat( STAT_VERSATILITY_RATING, fs_gems.stat_minor );
+    passive.add_stat( STAT_EXPERTISE_RATING, fs_gems.stat_minor );
     passive.add_stat( STAT_STAMINA, fs_gems.stat_minor );
   }
 
   if ( fs_gems.gem_powers[ GEM_SAPPHIRE ] >= GEM_TIER_7 )
   {
-    passive.add_stat( STAT_MASTERY_RATING, fs_gems.stat_major );
+    passive.add_stat( STAT_SPIRIT, fs_gems.stat_major );
     passive.add_stat( STAT_STAMINA, fs_gems.stat_major );
   }
   else if ( fs_gems.gem_powers[ GEM_SAPPHIRE ] >= GEM_TIER_2 )
   {
-    passive.add_stat( STAT_MASTERY_RATING, fs_gems.stat_minor );
+    passive.add_stat( STAT_SPIRIT, fs_gems.stat_minor );
     passive.add_stat( STAT_STAMINA, fs_gems.stat_minor );
   }
 
@@ -2130,7 +2129,7 @@ void fs_player_t::init_special_effects()
 
   if ( fs_weapons.willful_momentum > 0 )
   {
-    passive.add_stat( STAT_MASTERY_RATING,
+    passive.add_stat( STAT_SPIRIT,
                       fs_weapon_trait_values.willful_momentum_spirit[ fs_weapons.willful_momentum ] );
   }
 
@@ -2281,7 +2280,7 @@ void fs_player_t::init_special_effects()
     effect->proc_chance_ = fs_weapon_trait_values.navigators_intuition_chance[ fs_weapons.navigators_intuition ];
     effect->type         = special_effect_e::SPECIAL_EFFECT_EQUIP;
 
-    static constexpr std::array<stat_e, 4> secondary_ratings = { STAT_VERSATILITY_RATING, STAT_MASTERY_RATING, STAT_HASTE_RATING,
+    static constexpr std::array<stat_e, 4> secondary_ratings = { STAT_EXPERTISE_RATING, STAT_SPIRIT, STAT_HASTE_RATING,
                                                 STAT_CRIT_RATING };
 
     struct navigators_intuition_cb_t : dbc_proc_callback_t

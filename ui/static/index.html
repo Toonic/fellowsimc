@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FellowSimc - Fellowship Character Importer & Simulator</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-text">
+          <h1><span class="brand-white">FELLOW</span><span class="brand-gold">SIMC</span></h1>
+          <span class="brand-subtitle">FELLOWSHIP CHARACTER IMPORTER & SIMULATOR</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div id="connection-status" class="status-badge connected">
+          <span class="status-dot"></span>
+          <span class="status-text">API READY</span>
+        </div>
+        <button id="btn-settings" class="btn btn-secondary" title="API Settings">API KEYS</button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="tab-importer">1. LOG IMPORTER</button>
+      <button class="nav-tab" data-tab="tab-hero">2. HERO & LOADOUT</button>
+      <button class="nav-tab" data-tab="tab-routes">3. ROUTE & MODES</button>
+      <button class="nav-tab" data-tab="tab-advanced">4. ADVANCED & APL</button>
+      <button class="nav-tab" data-tab="tab-results">5. SIMULATE & RESULTS</button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- TAB 1: IMPORTER -->
+      <section id="tab-importer" class="tab-pane active">
+        <div class="card">
+          <div class="card-header">
+            <h2>IMPORT CHARACTER FROM FELLOWSHIPLOGS</h2>
+            <p>Paste a report link or code (e.g. <code>https://www.fellowshiplogs.com/reports/yLzJ8M391AwYfVTK?fight=32&type=summary&source=3</code>) to auto-grab fights and heroes.</p>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="input-report-url">FellowshipLogs URL or Report Code</label>
+              <div class="input-action-group">
+                <input type="text" id="input-report-url" class="form-input" placeholder="https://www.fellowshiplogs.com/reports/yLzJ8M391AwYfVTK?fight=32&type=summary&source=3" value="https://www.fellowshiplogs.com/reports/yLzJ8M391AwYfVTK?fight=32&type=summary&source=3">
+                <button id="btn-fetch-report" class="btn btn-primary">FETCH FIGHTS</button>
+              </div>
+            </div>
+
+            <div id="import-selection-area" class="selection-grid" style="display: none;">
+              <div class="form-group">
+                <label for="select-fight">Select Fight / Encounter</label>
+                <select id="select-fight" class="form-select"></select>
+              </div>
+
+              <div class="form-group">
+                <label for="select-player">Select Hero / Player</label>
+                <select id="select-player" class="form-select"></select>
+              </div>
+
+              <div class="form-group full-width">
+                <button id="btn-load-character" class="btn btn-primary btn-lg">
+                  IMPORT CHARACTER LOADOUT
+                </button>
+              </div>
+            </div>
+
+            <div id="character-summary-badge" class="character-summary-card" style="display: none;">
+              <div class="char-header-row">
+                <h3 id="summary-name">MIDPLS</h3>
+                <span id="summary-class" class="badge-role">RIME</span>
+              </div>
+              <div class="char-quick-stats" id="summary-stats">
+                <!-- Dynamically populated stats -->
+              </div>
+            </div>
+
+            <!-- Optional: Import Dungeon Route from Log -->
+            <div class="route-import-subcard">
+              <div class="subcard-header">
+                <h3>OPTIONAL: IMPORT DUNGEON ROUTE FROM LOG</h3>
+                <p>Generate a custom route from a specific fight's enemy data in any Fellowship log.</p>
+              </div>
+              <div class="input-action-group">
+                <input type="text" id="input-route-url" class="form-input" placeholder="Paste log URL or use current report..." value="">
+                <button id="btn-use-current-log-route" class="btn btn-secondary">USE CURRENT LOG</button>
+                <button id="btn-import-log-route" class="btn btn-primary" style="display: none;">IMPORT ROUTE</button>
+              </div>
+              <div id="route-import-status" class="route-status-text" style="display: none;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: HERO & LOADOUT (HERO SELECTOR + TALENTS + GEAR & STATS) -->
+      <section id="tab-hero" class="tab-pane">
+        <!-- Hero Selector Card -->
+        <div class="card hero-picker-card">
+          <div class="card-header">
+            <h2>SELECT HERO</h2>
+            <p>Select a hero coded in Simulationcraft. (Grayed out heroes are not yet implemented in the engine).</p>
+          </div>
+          <div class="hero-picker-grid" id="hero-picker-container">
+            <!-- Active Heroes -->
+            <div class="hero-picker-item active" data-hero="rime">
+              <span class="hero-chip-name">Rime</span>
+            </div>
+            <div class="hero-picker-item" data-hero="mara">
+              <span class="hero-chip-name">Mara</span>
+            </div>
+            <div class="hero-picker-item" data-hero="tariq">
+              <span class="hero-chip-name">Tariq</span>
+            </div>
+            <div class="hero-picker-item" data-hero="ardeos">
+              <span class="hero-chip-name">Ardeos</span>
+            </div>
+            <div class="hero-picker-item" data-hero="elarion">
+              <span class="hero-chip-name">Elarion</span>
+            </div>
+            <div class="hero-picker-item" data-hero="gunde">
+              <span class="hero-chip-name">Gunde</span>
+            </div>
+            <div class="hero-picker-item" data-hero="aeona">
+              <span class="hero-chip-name">Aeona</span>
+            </div>
+            <div class="hero-picker-item" data-hero="xavian">
+              <span class="hero-chip-name">Xavian</span>
+            </div>
+            <!-- Unimplemented Heroes -->
+            <div class="hero-picker-item disabled" title="Not yet implemented in SimC">
+              <span class="hero-chip-name">Meiko</span>
+              <span class="hero-disabled-tag">Not in SimC</span>
+            </div>
+            <div class="hero-picker-item disabled" title="Not yet implemented in SimC">
+              <span class="hero-chip-name">Sylvie</span>
+              <span class="hero-disabled-tag">Not in SimC</span>
+            </div>
+            <div class="hero-picker-item disabled" title="Not yet implemented in SimC">
+              <span class="hero-chip-name">Vigour</span>
+              <span class="hero-disabled-tag">Not in SimC</span>
+            </div>
+            <div class="hero-picker-item disabled" title="Not yet implemented in SimC">
+              <span class="hero-chip-name">Helena</span>
+              <span class="hero-disabled-tag">Not in SimC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Talent Tree Section -->
+        <div class="card talent-tree-card">
+          <div class="talent-header-row">
+            <div class="talent-points-block">
+              <span class="points-label">AVAILABLE TALENT POINTS</span>
+              <div class="points-value-display">
+                <span id="talent-points-available" class="points-bold">14</span>
+                <span class="points-max">/ 14</span>
+              </div>
+            </div>
+            <button id="btn-clear-talents" class="btn-clear-talents" type="button">Clear All</button>
+          </div>
+
+          <div class="talent-tiers-list" id="talent-tiers-container">
+            <!-- Dynamically populated 6 tiers (I through VI) with 3-column talent cards -->
+          </div>
+        </div>
+
+        <!-- Gear & Stats Section -->
+        <div class="stats-gear-grid">
+          <!-- Attributes Card -->
+          <div class="card">
+            <div class="card-header">
+              <h2>ATTRIBUTES & RATINGS</h2>
+              <p>Adjust primary attributes and secondary ratings.</p>
+            </div>
+            <div class="card-body">
+              <div class="stats-inputs-grid">
+                <div class="stat-box">
+                  <label id="label-stat-primary" for="stat-primary">Intellect</label>
+                  <input type="number" id="stat-primary" class="form-input" value="183">
+                </div>
+                <div class="stat-box">
+                  <label for="stat-stamina">Stamina</label>
+                  <input type="number" id="stat-stamina" class="form-input" value="397">
+                </div>
+                <div class="stat-box">
+                  <label for="stat-haste">Haste Rating</label>
+                  <input type="number" id="stat-haste" class="form-input" value="149">
+                </div>
+                <div class="stat-box">
+                  <label for="stat-expertise">Expertise Rating</label>
+                  <input type="number" id="stat-expertise" class="form-input" value="132">
+                </div>
+                <div class="stat-box">
+                  <label for="stat-crit">Critical Strike</label>
+                  <input type="number" id="stat-crit" class="form-input" value="120">
+                </div>
+                <div class="stat-box">
+                  <label for="stat-spirit">Spirit</label>
+                  <input type="number" id="stat-spirit" class="form-input" value="104">
+                </div>
+                <div class="stat-box">
+                  <label for="stat-armor">Armor</label>
+                  <input type="number" id="stat-armor" class="form-input" value="539">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weapon & Blessings Card -->
+          <div class="card">
+            <div class="card-header">
+              <h2>WEAPON, BLESSINGS & GEMS</h2>
+              <p>Active weapon, traits, and socketed gem powers.</p>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="select-weapon">Equipped Weapon</label>
+                <select id="select-weapon" class="form-select">
+                  <option value="chronoshift" selected>Asha's Chronoshift Spire</option>
+                  <option value="voidbringer">Voidbringer</option>
+                  <option value="natures_fury">Nature's Fury</option>
+                  <option value="twilight_skybolt">Twilight Skybolt</option>
+                  <option value="fated_strike">Fated Strike</option>
+                  <option value="sahrils_wrath">Sahril's Wrath</option>
+                  <option value="earthbreaker">Earthbreaker</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="select-legendary">Equipped Legendary</label>
+                <select id="select-legendary" class="form-select">
+                  <!-- Dynamically populated based on active hero -->
+                </select>
+              </div>
+
+              <!-- Gem Powers -->
+              <div class="loadout-section">
+                <div class="section-title-row">
+                  <label class="section-label">Gem Powers</label>
+                </div>
+                <div class="gem-powers-grid">
+                  <div class="gem-input-box">
+                    <label for="gem-sapphire"><span class="gem-dot sapphire"></span>Sapphire</label>
+                    <input type="number" id="gem-sapphire" class="form-input gem-input" min="0" step="25" value="0">
+                  </div>
+                  <div class="gem-input-box">
+                    <label for="gem-amethyst"><span class="gem-dot amethyst"></span>Amethyst</label>
+                    <input type="number" id="gem-amethyst" class="form-input gem-input" min="0" step="25" value="0">
+                  </div>
+                  <div class="gem-input-box">
+                    <label for="gem-emerald"><span class="gem-dot emerald"></span>Emerald</label>
+                    <input type="number" id="gem-emerald" class="form-input gem-input" min="0" step="25" value="0">
+                  </div>
+                  <div class="gem-input-box">
+                    <label for="gem-ruby"><span class="gem-dot ruby"></span>Ruby</label>
+                    <input type="number" id="gem-ruby" class="form-input gem-input" min="0" step="25" value="0">
+                  </div>
+                  <div class="gem-input-box">
+                    <label for="gem-diamond"><span class="gem-dot diamond"></span>Diamond</label>
+                    <input type="number" id="gem-diamond" class="form-input gem-input" min="0" step="25" value="0">
+                  </div>
+                  <div class="gem-input-box">
+                    <label for="gem-topaz"><span class="gem-dot topaz"></span>Topaz</label>
+                    <input type="number" id="gem-topaz" class="form-input gem-input" min="0" step="25" value="0">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Weapon Traits -->
+              <div class="loadout-section">
+                <div class="section-title-row">
+                  <label class="section-label">Weapon Traits (0 - 4)</label>
+                  <span class="section-hint" id="traits-total-counter">0 Active</span>
+                </div>
+                <div class="steppers-grid" id="weapon-traits-container">
+                  <!-- Dynamically populated with all 27 weapon traits -->
+                </div>
+              </div>
+
+              <!-- Blessings & Affixes -->
+              <div class="loadout-section">
+                <div class="section-title-row">
+                  <label class="section-label">Blessings & Affixes (0 - 4)</label>
+                  <span class="section-hint" id="blessings-total-counter">0 Active</span>
+                </div>
+                <div class="steppers-grid" id="blessings-container">
+                  <!-- Dynamically populated with all 14 blessings -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: ROUTE & MODES -->
+      <section id="tab-routes" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <h2>ROUTE & SIMULATION MODE</h2>
+            <p>Select the encounter type and scaling parameters.</p>
+          </div>
+          <div class="card-body">
+            <div class="mode-cards-grid">
+              <!-- Card 1: Dungeon Route -->
+              <div class="mode-card active" data-mode="dungeon" id="card-mode-dungeon">
+                <h3>DUNGEON ROUTE</h3>
+                <div class="form-group" style="margin-top: 10px; margin-bottom: 8px;">
+                  <select id="select-dungeon-route" class="form-select">
+                    <option value="eternal_62" selected>Dungeon Route - Eternal 62</option>
+                    <option value="custom_imported">Imported Dungeon Route</option>
+                  </select>
+                </div>
+                <p class="mode-desc" id="dungeon-route-desc">Exported from a Wyrmheart 62 route.</p>
+                <div class="mode-options">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="check-scale-damage" checked>
+                    <span>Scale Mob HP to Player's % Damage Done</span>
+                  </label>
+                  <div class="scale-input-wrapper">
+                    <label for="input-scale-pct">Player Damage %:</label>
+                    <div class="input-with-unit">
+                      <input type="number" id="input-scale-pct" class="form-input form-input-sm" value="37.99" step="0.01" min="1" max="100">
+                      <span class="input-unit">%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2: Single Target Test -->
+              <div class="mode-card" data-mode="single_target" id="card-mode-st">
+                <h3>SINGLE TARGET TEST</h3>
+                <p class="mode-desc">Standard Patchwerk-style boss encounter with custom duration.</p>
+                <div class="mode-options">
+                  <label for="input-st-duration">Duration (Seconds):</label>
+                  <input type="number" id="input-st-duration" class="form-input" value="360" min="30" max="1800">
+                </div>
+              </div>
+
+              <!-- Card 3: AoE Target Test -->
+              <div class="mode-card" data-mode="aoe" id="card-mode-aoe">
+                <h3>AOE TARGET TEST</h3>
+                <p class="mode-desc">Multi-target sustained cleave test.</p>
+                <div class="mode-options">
+                  <label for="input-aoe-targets">Target Count:</label>
+                  <input type="number" id="input-aoe-targets" class="form-input" value="10" min="2" max="50">
+                  <label for="input-aoe-duration" style="margin-top: 8px;">Duration (Seconds):</label>
+                  <input type="number" id="input-aoe-duration" class="form-input" value="360" min="30" max="1800">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: ADVANCED & APL -->
+      <section id="tab-advanced" class="tab-pane">
+        <!-- APL Configuration Card -->
+        <div class="card">
+          <div class="card-header">
+            <h2>ACTION PRIORITY LIST (APL) CONFIGURATION</h2>
+            <p>Select a hero APL preset or toggle Custom APL to write your own rotation.</p>
+          <div class="card-body">
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="select-apl-preset">APL PRESET SELECTION</label>
+                <label class="checkbox-label toggle-custom-apl">
+                  <span>USE CUSTOM APL</span>
+                </label>
+              </div>
+              <select id="select-apl-preset" class="form-select">
+                <option value="base" selected>Dynamic Build Router (rime_base_apl.simc)</option>
+                <option value="talons">Solved Talons APL (rime_talons_apl.simc)</option>
+              </select>
+            </div>
+
+            <div id="custom-apl-container" style="display: none; margin-top: 16px;">
+              <label for="custom-apl-editor">Custom APL Definition (Actions & Priorities):</label>
+              <textarea id="custom-apl-editor" class="code-editor" rows="10" spellcheck="false" placeholder="# Write or paste custom APL actions here...
+actions.precombat=snapshot_stats
+actions.precombat+=/frost_bolt
+actions+=/ice_blitz
+actions+=/winters_blessing
+actions+=/flight_of_the_navir
+actions+=/cold_snap,if=cooldown.chronoshift.up&worb<5
+actions+=/chronoshift,if=(spirit>=70|spirit>=85|buff.ice_blitz.up)&(cooldown.cold_snap.charges=0|worb>=5)
+actions+=/frost_bolt"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulation Precision & Iterations -->
+        <div class="card">
+          <div class="card-header">
+            <h2>SIMULATION PRECISION & ITERATIONS</h2>
+            <p>Configure iteration count and thread allocation for the simulator.</p>
+          </div>
+          <div class="card-body">
+            <div class="sim-settings-grid">
+              <div class="form-group">
+                <label for="input-iterations">Simulation Iterations</label>
+                <input type="number" id="input-iterations" class="form-input" value="1000" min="100" max="100000" step="500">
+                <div class="chip-group">
+                  <button type="button" class="btn btn-primary btn-sm btn-chip" data-iterations="1000">1,000 (FAST)</button>
+                  <button type="button" class="btn btn-secondary btn-sm btn-chip" data-iterations="5000">5,000</button>
+                  <button type="button" class="btn btn-secondary btn-sm btn-chip" data-iterations="10000">10,000 (STANDARD)</button>
+                  <button type="button" class="btn btn-secondary btn-sm btn-chip" data-iterations="25000">25,000 (PRECISE)</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="input-threads">CPU Threads</label>
+                <input type="number" id="input-threads" class="form-input" value="12" min="1" max="64">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Generated Profile Editor -->
+        <div class="card">
+          <div class="card-header">
+            <h2>GENERATED SIMC PROFILE</h2>
+            <p>Directly inspect and modify the raw Simulationcraft profile before running.</p>
+          </div>
+          <div class="card-body">
+            <textarea id="raw-profile-editor" class="code-editor" rows="18" spellcheck="false"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: RESULTS -->
+      <section id="tab-results" class="tab-pane">
+        <div class="card results-hero-card">
+          <div class="dps-main-metric">
+            <span class="dps-label">SIMULATED MEAN OUTPUT</span>
+            <h2 id="result-dps-value">-- DPS</h2>
+            <span id="result-meta-info" class="dps-meta">1000 Iterations • 0.0s elapsed</span>
+          </div>
+          <div class="results-quick-actions">
+            <button id="btn-run-sim" class="btn btn-primary">RUN SIM</button>
+            <button id="btn-open-html-report" class="btn btn-secondary" style="display: none;">
+              OPEN FULL HTML REPORT
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>SIMULATION LOG OUTPUT</h3>
+          </div>
+          <div class="card-body">
+            <pre id="sim-console-output" class="console-box">No simulation run yet. Click "RUN SIMULATION" above to begin.</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- API Keys Modal -->
+    <div id="modal-settings" class="modal-overlay" style="display: none;">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>FELLOWSHIPLOGS API CONFIGURATION</h3>
+          <button id="btn-close-modal" class="btn-close">✕</button>
+        </div>
+        <div class="modal-body">
+          <p>Enter your Client ID and Client Secret from <a href="https://www.fellowshiplogs.com/profile" target="_blank">fellowshiplogs.com/profile</a>.</p>
+          <div class="form-group">
+            <label for="cfg-client-id">Client ID</label>
+            <input type="text" id="cfg-client-id" class="form-input" placeholder="Enter Client ID...">
+          </div>
+          <div class="form-group">
+            <label for="cfg-client-secret">Client Secret</label>
+            <input type="password" id="cfg-client-secret" class="form-input" placeholder="Enter Client Secret...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-save-settings" class="btn btn-primary">SAVE CREDENTIALS</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -20,8 +20,10 @@ jobs:
         run: |
           mkdir release-package
           copy bin\x64\Release\simc.exe release-package\
-          Copy-Item -Recurse apl release-package\apl
-          Copy-Item -Recurse profiles release-package\profiles
+          copy start_ui.bat release-package\
+          New-Item -ItemType Directory -Force -Path release-package\apl
+          Get-ChildItem -Path apl -Exclude "development" | Copy-Item -Destination release-package\apl -Recurse -Force
+          if (Test-Path profiles) { Copy-Item -Recurse profiles release-package\profiles }
           Compress-Archive -Path release-package\* -DestinationPath simc-windows.zip
 
       - name: Upload artifact

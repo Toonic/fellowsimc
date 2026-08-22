@@ -1285,10 +1285,10 @@ struct rising_talons_t : public rime_spell_t
 
       spell_power_mod.direct = p->spell_const.ice_comet_coeff;
       aoe                    = -1;
-      reduced_aoe_targets    = p->spell_const.ice_comet_falloff;
 
       spell_power_mod.direct *= p->talents.icy_talons_aoe_multiplier;
       ability_flags |= ability_type_e::ABILITY_POWER;
+      snapshot_flags |= STATE_MUL_DA | STATE_TGT_MUL_DA | STATE_MUL_PERSISTENT | STATE_CRIT | STATE_SP | STATE_VERSATILITY | STATE_MUL_PLAYER_DAM;
     }
 
     static const talons_action_state_t<base_t>* cast_state( const action_state_t* st )
@@ -1304,6 +1304,27 @@ struct rising_talons_t : public rime_spell_t
     action_state_t* new_state() override
     {
       return new talons_action_state_t<base_t>( this, target );
+    }
+
+    void snapshot_state( action_state_t* state, result_amount_type rt ) override
+    {
+      auto rs = cast_state( state );
+
+      rs->glacial_assault_stacks = p()->buffs.glacial_assault->stack();
+
+      base_t::snapshot_state( state, rt );
+    }
+
+    double composite_da_multiplier( const action_state_t* state ) const override
+    {
+      double m = rime_spell_t::composite_da_multiplier( state );
+
+      auto rs = cast_state( state );
+
+      if ( rs->glacial_assault_stacks == p()->buffs.glacial_assault->max_stack() )
+        m *= 1.0 + p()->talents.glacial_assault_amp;
+
+      return m;
     }
 
     double composite_crit_chance() const override
@@ -1425,6 +1446,7 @@ struct talon_strike_t : public rime_spell_t
         add_child( ga_cleave );
       }
       ability_flags |= ability_type_e::ABILITY_POWER;
+      snapshot_flags |= STATE_MUL_DA | STATE_TGT_MUL_DA | STATE_MUL_PERSISTENT | STATE_CRIT | STATE_SP | STATE_VERSATILITY | STATE_MUL_PLAYER_DAM;
     }
 
     static const talons_action_state_t<base_t>* cast_state( const action_state_t* st )
@@ -1532,6 +1554,10 @@ struct talon_strike_t : public rime_spell_t
   void execute()
   {
     auto cp = p()->resources.current[ RESOURCE_WINTER_ORB ];
+
+    if ( p()->buffs.glacial_assault->at_max_stacks() )
+      cp = p()->resources.max[ RESOURCE_WINTER_ORB ];
+
     rime_spell_t::execute();
 
     for ( int i = 0; i < cp; ++i )
@@ -1697,6 +1723,14 @@ struct cold_snap_t : public rime_spell_t
       full_amount_targets = 1;
     }
     ability_flags |= ability_type_e::ABILITY_BASIC;
+  }
+
+  bool ready() override
+  {
+    if ( p()->buffs.navirs_keeper->up() )
+      return true;
+
+    return rime_spell_t::ready();
   }
 
   void update_ready( timespan_t cd_duration ) override
@@ -2100,7 +2134,7 @@ struct frost_swallow_t : public rime_spell_t
   {
     double m = base_t::composite_da_multiplier( s );
 
-    m *= 1.0 + p()->cache.mastery() * p()->spell_const.bird_spirit_multiplier;
+    m *= 1.0 + ( p()->resources.current[ RESOURCE_SPIRIT ] / 100.0 ) * p()->spell_const.bird_spirit_multiplier;
 
     return m;
   }
@@ -2590,7 +2624,7 @@ void rime_t::create_buffs()
   buffs.winters_blessing = make_buff<rime_buff_t>( this, "winters_blessing" )
                                ->set_duration( 20_s )
                                ->set_default_value( 0.20 )
-                               ->set_pct_buff_type( STAT_PCT_BUFF_MASTERY );
+                               ->set_pct_buff_type( STAT_PCT_BUFF_SPIRIT );
 
   buffs.winters_embrace = make_buff<rime_buff_t>( this, "winters_embrace" )->set_default_value( 0.2 );
 
@@ -2604,10 +2638,7 @@ void rime_t::create_buffs()
 
   buffs.navirs_keeper = make_buff<rime_buff_t>( this, "navirs_keeper" )
                             ->set_max_stack( talents.navirs_keeper_cold_snaps )
-                            ->set_constant_behavior( buff_constant_behavior::NEVER_CONSTANT )
-                            ->add_stack_change_callback( [ this ]( buff_t*, int old, int _new ) {
-                              cooldowns.cold_snap->adjust_max_charges( _new - old );
-                            } );
+                            ->set_constant_behavior( buff_constant_behavior::NEVER_CONSTANT );
 
   buffs.harrowing_ice = make_buff<rime_buff_t>( this, "harrowing_ice" )
                             ->set_max_stack( talents.harrowing_ice_max_stacks )
@@ -2816,11 +2847,8 @@ double rime_t::stacking_movement_modifier() const
 template <typename Base>
 void actions::rime_action_t<Base>::trigger_spirit_refund( const action_state_t* state, double orbs_refunded )
 {
-  make_event( ab::sim, 200_ms, [ orbs_refunded, this ] {
-    p()->resource_gain( RESOURCE_WINTER_ORB, orbs_refunded, p()->gains.spirit_procs, this );
-    p()->sim->print_debug( "{} actually refunded {:.0f} Winter Orbs", *p(), orbs_refunded );
-  } );
-
+  p()->resource_gain( RESOURCE_WINTER_ORB, orbs_refunded, p()->gains.spirit_procs, this );
+  p()->sim->print_debug( "{} actually refunded {:.0f} Winter Orbs", *p(), orbs_refunded );
   p()->spirit_refund();
 }
 

@@ -774,7 +774,7 @@ public:
 
     if ( fs_p()->finesse_traits[ THE_MYSTIC ] && ab::ability_flags & ability_type_e::ABILITY_POWER )
     {
-      auto mast = std::min( fs_p()->finesse_trait_values.finesse_j_max, fs_p()->cache.mastery() );
+      auto mast = std::min( fs_p()->finesse_trait_values.finesse_j_max, fs_p()->resources.current[ RESOURCE_SPIRIT ] / 100.0 );
       m *= 1.0 + finesse_j_mul * mast;
     }
 
@@ -890,7 +890,7 @@ public:
 
       if ( fs_p()->finesse_traits[ THE_PHILOSOPHER ] > 0 && ab::ability_flags & ability_type_e::ABILITY_MAJOR )
       {
-        auto mast = std::min( fs_p()->finesse_trait_values.finesse_g_max, fs_p()->cache.mastery() );
+        auto mast = std::min( fs_p()->finesse_trait_values.finesse_g_max, fs_p()->resources.current[ RESOURCE_SPIRIT ] / 100.0 );
 
         fs_p()->fs_buffs.the_philosopher->trigger(
             1, fs_p()->finesse_trait_values.finesse_g_spirit_to_stats[ fs_p()->finesse_traits[ THE_PHILOSOPHER ] ] * mast );
